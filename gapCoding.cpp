@@ -1,36 +1,34 @@
 #include <iostream>
 #include <array>
-#include <vector>
 
-std::vector<int> calculateGapCoding(const std::vector<int>& arr) {
-    std::vector<int> gapCoding;
-    gapCoding.push_back(arr[0]);
+// Definición de una plantilla de función para calcular el gap coding de un std::array
+template <std::size_t N>
+std::array<int, N> calculateGapCoding(const std::array<int, N>& arr) {
+    std::array<int, N> gapCoding;
+    gapCoding[0] = arr[0];
 
-    for (int i = 1; i < arr.size(); i++) {
+    for (std::size_t i = 1; i < N; i++) {
         int gap = arr[i] - arr[i - 1];
-        gapCoding.push_back(gap);
+        gapCoding[i] = gap;
     }
 
     return gapCoding;
 }
 
 int main() {
-    std::array<int, 7> myArray = {1, 5, 9, 16, 19, 24, 34}; 
+    std::array<int, 7> myArray = {2, 5, 9, 16, 19, 24, 34}; 
     // Declaración e inicialización
 
     // Imprimir los elementos del arreglo
-    for (int i = 0; i < myArray.size(); i++) {
+    for (std::size_t i = 0; i < myArray.size(); i++) {
         std::cout << "Elemento " << i << ": " << myArray[i] << std::endl;
     }
     
-    // Convertir std::array a std::vector
-    std::vector<int> myVector(myArray.begin(), myArray.end());
-    
     // Calcular el gap coding
-    std::vector<int> GPCoding = calculateGapCoding(myVector);
+    std::array<int, 7> GPCoding = calculateGapCoding(myArray);
     
     // Imprimir los elementos del gap coding
-    for (int i = 0; i < GPCoding.size(); i++) {
+    for (std::size_t i = 0; i < GPCoding.size(); i++) {
         std::cout << "Gap coding " << i << ": " << GPCoding[i] << std::endl;
     }
 
