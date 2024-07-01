@@ -5,10 +5,13 @@
 #include <ctime> // Para medir el tiempo
 #include <algorithm> //Para usar sort
 
+
 using namespace std;
 
 int dLineal (int n, int e, int* A);
 void dNormal(int n, int media, int desviacionEstandar, int* A, int semilla);
+void gapCoding(int n, int* A, int* G);
+void createSample(int n, int* A, int* sample, int m, int b);
 void imprimeArreglo (int* A, int n);
 
 int dLineal (int n, int e, int* A){
@@ -27,6 +30,25 @@ void dNormal(int n, int media, int desviacionEstandar, int* A, int semilla){
     }
     sort(A, A + n); // Usa introsort
 
+}
+void gapCoding(int n, int* A, int* G){
+    //int* gaps = new int[n];
+    G[0] = A[0];
+    for(int i = 1; i < n; i++){
+        G[i] = A[i] - A[i-1];
+    }
+}
+
+void createSample(int n, int* A, int* sample, int m, int b) {
+    // Asignar el primer elemento del sample
+    sample[0] = A[0];
+
+    // Llenar el arreglo sample
+    int acum = b;
+    for (int i = 1; i < m; ++i) {
+        sample[i] = A[acum];
+        acum += b;
+    }
 }
 void imprimeArreglo (int* A, int n){
     cout << "[";
@@ -55,17 +77,28 @@ int main(int argc, char* argv[]) {
     unsigned long t0,t1;
     int* A = new int[n];
     int* B = new int[n];
-    t0 = clock();
+    int m = static_cast<int>(floor(log(n) / log(3))); // log base 3 de n
+    int b = n / m; // piso de la división
+    int* gapsA = new int[n];
+    int* sampleA = new int[m];
+    int* gapsB = new int[n];
+    int* sampleB = new int[m];
+    //t0 = clock();
     dLineal(n, 20, A);
-    t1 = clock();
-    cout << "El tiempo de ejecución para dLineal es: " << double(t1-t0)/CLOCKS_PER_SEC << " seg."<< endl;
-    t0 = clock();
+    //t1 = clock();
+    //cout << "El tiempo de ejecución para dLineal es: " << double(t1-t0)/CLOCKS_PER_SEC << " seg."<< endl;
+    //t0 = clock();
     dNormal(n,1000000,1000,B, semilla);
-    t1 = clock();
-    cout << "El tiempo de ejecución para dNormal es: " << double(t1-t0)/CLOCKS_PER_SEC << " seg."<< endl;
+    //t1 = clock();
+    //cout << "El tiempo de ejecución para dNormal es: " << double(t1-t0)/CLOCKS_PER_SEC << " seg."<< endl;
+    gapCoding(n, A, gapsA);
+    createSample(n, A, sampleA, m ,b);
+    imprimeArreglo(A, n);
+    imprimeArreglo(gapsA, n);
+    imprimeArreglo(sampleA, m);
     
-    //imprimeArreglo(B, n);
-    //cout << "El tamaño en memoria del arreglo que contiene " << n << " elementos es: "<< sizeof(A)*n << " bits."<< endl;
+
+    delete[] A;
     delete[] B; // Liberar la memoria asignada
     cout << "##################################################################################" << endl;
     return 0;
