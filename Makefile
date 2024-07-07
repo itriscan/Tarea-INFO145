@@ -10,7 +10,7 @@ CXXFLAGS = -Wall -std=c++11
 TARGET = main
 
 # Archivos fuente
-SRCS = main.cpp distribuciones.cpp gapCandSample.cpp
+SRCS = main.cpp distribuciones.cpp gapCandSample.cpp huffman.cpp
 
 # Archivos objeto
 OBJS = $(SRCS:.cpp=.o)

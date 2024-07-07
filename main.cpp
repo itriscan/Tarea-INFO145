@@ -1,8 +1,11 @@
 #include <iostream>
 #include <stdlib.h>
 #include <cmath>
+#include <unordered_map>
+#include <vector>
 #include "distribuciones.h"
 #include "gapCandSample.h"
+#include "huffman.h"
 
 using namespace std;
 void imprimeArreglo (int* A, int n);
@@ -45,17 +48,52 @@ int main(int argc, char* argv[]) {
     gapCoding(n, A, gapsA);
     createSample(n, A, sampleA, m ,b);
     cout << "Imprime el arreglo A " << endl;
-    imprimeArreglo(A, n);
+    //imprimeArreglo(A, n);
     imprimeArreglo(gapsA, n);
     imprimeArreglo(sampleA, m);
-    cout << "Imprime el arreglo B " << endl;
-    imprimeArreglo(B, n);
-    imprimeArreglo(gapsB, n);
-    imprimeArreglo(sampleB, m);
+    // Calcular frecuencias
+    std::unordered_map<int, int> freqMap;
+    for (int i = 0; i < n; ++i) {
+        freqMap[gapsA[i]]++;
+    }
+
+    // Crear arreglos de datos y frecuencias
+    int* data = new int[freqMap.size()];
+    int* freq = new int[freqMap.size()];
+    int index = 0;
+    for (auto& pair : freqMap) {
+        data[index] = pair.first;
+        freq[index] = pair.second;
+        index++;
+    }
+
+    std::unordered_map<int, std::string> huffmanCode;
+    HuffmanCodes(data, freq, freqMap.size(), huffmanCode);
+
+    // Imprimir los códigos de Huffman
+    for (auto& pair : huffmanCode) {
+        std::cout << pair.first << " " << pair.second << std::endl;
+    }
+
+    // Aplicar la codificación a gapsA
+    std::vector<std::string> compressedData;
+    for (int i = 0; i < n; ++i) {
+        compressedData.push_back(huffmanCode[gapsA[i]]);
+    }
+
+    // Imprimir los datos comprimidos
+    for (auto& code : compressedData) {
+        std::cout << code << " ";
+    }
+    std::cout << std::endl;
 
     delete[] A;
-    delete[] B; // Liberar la memoria asignada
+    delete[] B;
+    delete[] gapsA;
+    delete[] sampleA;
+    delete[] data;
+    delete[] freq;
 
-    cout << "##################################################################################" << endl;
+    std::cout << "##################################################################################" << std::endl;
     return 0;
 }
