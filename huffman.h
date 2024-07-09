@@ -1,8 +1,10 @@
 #ifndef HUFFMAN_H
 #define HUFFMAN_H
 
-#include <string>
 #include <unordered_map>
+#include <string>
+#include <vector>
+#include <queue>
 
 // Estructura del nodo de Huffman
 struct HuffmanNode {
@@ -25,9 +27,14 @@ struct compare {
 };
 
 // Función para imprimir los códigos de Huffman
-void printCodes(struct HuffmanNode* root, std::string str, std::unordered_map<int, std::string> &huffmanCode);
+void printCodes(HuffmanNode* root, std::string str, std::unordered_map<int, std::string> &huffmanCode);
 
 // Función para generar los códigos de Huffman
 void HuffmanCodes(int data[], int freq[], int size, std::unordered_map<int, std::string> &huffmanCode);
+
+// Función para construir el árbol de Huffman
+HuffmanNode* buildHuffmanTree(std::priority_queue<HuffmanNode*, std::vector<HuffmanNode*>, compare> &Q);
+
+void printHuffmanTree(HuffmanNode* root, int prof = 0);
 
 #endif // HUFFMAN_H

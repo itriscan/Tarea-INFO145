@@ -8,6 +8,7 @@
 #include "huffman.h"
 
 using namespace std;
+
 void imprimeArreglo (int* A, int n);
 void imprimeArreglo (int* A, int n){
     cout << "[";
@@ -51,42 +52,44 @@ int main(int argc, char* argv[]) {
     //imprimeArreglo(A, n);
     imprimeArreglo(gapsA, n);
     imprimeArreglo(sampleA, m);
-    // Calcular frecuencias
-    std::unordered_map<int, int> freqMap;
+    
+    // Calcular frecuencias para el arreglo gapsA
+    unordered_map<int, int> freqMapA;
     for (int i = 0; i < n; ++i) {
-        freqMap[gapsA[i]]++;
+        freqMapA[gapsA[i]]++;
     }
 
     // Crear arreglos de datos y frecuencias
-    int* data = new int[freqMap.size()];
-    int* freq = new int[freqMap.size()];
+    int* data = new int[freqMapA.size()];
+    int* freq = new int[freqMapA.size()];
     int index = 0;
-    for (auto& pair : freqMap) {
+    for (auto& pair : freqMapA) {
         data[index] = pair.first;
         freq[index] = pair.second;
         index++;
     }
 
-    std::unordered_map<int, std::string> huffmanCode;
-    HuffmanCodes(data, freq, freqMap.size(), huffmanCode);
+    unordered_map<int,string> huffmanCode;
+    HuffmanCodes(data, freq, freqMapA.size(), huffmanCode);
 
     // Imprimir los códigos de Huffman
+    cout << "Imprimir los códigos de Huffman" << endl;
     for (auto& pair : huffmanCode) {
-        std::cout << pair.first << " " << pair.second << std::endl;
+        cout << pair.first << " " << pair.second << endl;
     }
 
     // Aplicar la codificación a gapsA
-    std::vector<std::string> compressedData;
+    vector<string> datosComprimidosA;
     for (int i = 0; i < n; ++i) {
-        compressedData.push_back(huffmanCode[gapsA[i]]);
+        datosComprimidosA.push_back(huffmanCode[gapsA[i]]);
     }
 
     // Imprimir los datos comprimidos
-    for (auto& code : compressedData) {
-        std::cout << code << " ";
+    cout << "Imprimir los datos comprimidos" << endl;
+    for (auto& code : datosComprimidosA) {
+       cout << code << " ";
     }
-    std::cout << std::endl;
-
+    cout << endl;
     delete[] A;
     delete[] B;
     delete[] gapsA;
@@ -94,6 +97,6 @@ int main(int argc, char* argv[]) {
     delete[] data;
     delete[] freq;
 
-    std::cout << "##################################################################################" << std::endl;
+    cout << "##################################################################################" << endl;
     return 0;
 }
