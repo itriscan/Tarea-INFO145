@@ -7,21 +7,28 @@ CXX = g++
 CXXFLAGS = -Wall -std=c++11
 
 # Nombre del ejecutable
-TARGET = tarea
+TARGET = main
 
 # Archivos fuente
-SRCS = tarea.cpp
+SRCS = main.cpp distribuciones.cpp gapCandSample.cpp huffman.cpp
+
+# Archivos objeto
+OBJS = $(SRCS:.cpp=.o)
 
 # Regla por defecto
 all: $(TARGET)
 
 # Regla para compilar el ejecutable
-$(TARGET): $(SRCS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SRCS)
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
+
+# Regla para compilar los archivos objeto
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Regla para limpiar los archivos generados
 clean:
-	rm -f $(TARGET)
+	rm -f $(TARGET) $(OBJS)
 
 # Regla para ejecutar el programa
 run: $(TARGET)
