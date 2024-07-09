@@ -6,10 +6,21 @@
 #include "distribuciones.h"
 #include "gapCandSample.h"
 #include "huffman.h"
+#include <bitset>
 
 using namespace std;
 
 void imprimeArreglo (int* A, int n);
+unsigned int binaryStringToInt(const string &binaryString);
+
+unsigned int binaryStringToInt(const string &binaryString) {
+    unsigned int num = 0;
+    for (char bit : binaryString) {
+        num = (num << 1) | (bit - '0');
+    }
+    return num;
+}
+
 void imprimeArreglo (int* A, int n){
     cout << "[";
     for(int i = 0; i < n; i++){
@@ -53,22 +64,13 @@ int main(int argc, char* argv[]) {
     imprimeArreglo(gapsA, n);
     imprimeArreglo(sampleA, m);
     
-    // Calcular frecuencias para el arreglo gapsA
     unordered_map<int, int> freqMapA;
-    for (int i = 0; i < n; ++i) {
-        freqMapA[gapsA[i]]++;
-    }
+    int* data = nullptr;
+    int* freq = nullptr;
+    //Toma el arreglo gap-coding y llena data y freq, con el dato y su frecuencia respectivamente
+    calculaFrecuenciasDataFreq(gapsA, n, freqMapA, data, freq);
 
-    // Crear arreglos de datos y frecuencias
-    int* data = new int[freqMapA.size()];
-    int* freq = new int[freqMapA.size()];
-    int index = 0;
-    for (auto& pair : freqMapA) {
-        data[index] = pair.first;
-        freq[index] = pair.second;
-        index++;
-    }
-
+    //Se asignan los códigos de Huffman a cada elemento y se crea el árbol de Huffman
     unordered_map<int,string> huffmanCode;
     HuffmanCodes(data, freq, freqMapA.size(), huffmanCode);
 
@@ -78,18 +80,20 @@ int main(int argc, char* argv[]) {
         cout << pair.first << " " << pair.second << endl;
     }
 
+
+
     // Aplicar la codificación a gapsA
-    vector<string> datosComprimidosA;
+    vector<unsigned int> datosComprimidosA;
     for (int i = 0; i < n; ++i) {
-        datosComprimidosA.push_back(huffmanCode[gapsA[i]]);
+        datosComprimidosA.push_back(binaryStringToInt(huffmanCode[gapsA[i]]));
     }
 
     // Imprimir los datos comprimidos
     cout << "Imprimir los datos comprimidos" << endl;
     for (auto& code : datosComprimidosA) {
-       cout << code << " ";
+        cout << bitset<16>(code) << " ";
     }
-    cout << endl;
+
     delete[] A;
     delete[] B;
     delete[] gapsA;

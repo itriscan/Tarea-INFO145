@@ -37,4 +37,6 @@ HuffmanNode* buildHuffmanTree(std::priority_queue<HuffmanNode*, std::vector<Huff
 
 void printHuffmanTree(HuffmanNode* root, int prof = 0);
 
+void calculaFrecuenciasDataFreq (int* inputArray, int size, std::unordered_map<int, int>& freqMap, int*& data, int*& freq);
+
 #endif // HUFFMAN_H

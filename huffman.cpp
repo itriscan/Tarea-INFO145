@@ -31,11 +31,11 @@ HuffmanNode* buildHuffmanTree(priority_queue<HuffmanNode*, vector<HuffmanNode*>,
 }
 
 // Función para generar los códigos de Huffman
-void HuffmanCodes(int data[], int freq[], int size, unordered_map<int,string> &huffmanCode) {
+void HuffmanCodes(int data[], int freq[], int size, unordered_map<int, string> &huffmanCode) {
     priority_queue<HuffmanNode*, vector<HuffmanNode*>, compare> Q;
 
     for (int i = 0; i < size; ++i){
-        cout << "Dato: " << data[i] <<" Frecuencia: " << freq[i] << endl;
+        //cout << "Dato: " << data[i] <<" Frecuencia: " << freq[i] << endl;
         Q.push(new HuffmanNode(data[i], freq[i]));
         
     }
@@ -60,4 +60,22 @@ void printHuffmanTree(HuffmanNode* root, int prof) {
 
     printHuffmanTree(root->left, prof + 1);
     printHuffmanTree(root->right, prof + 1);
+}
+
+void calculaFrecuenciasDataFreq (int* arreglo, int size, unordered_map<int, int>& freqMap, int*& data, int*& freq){
+    for (int i = 0; i < size; ++i) {
+        freqMap[arreglo[i]]++;
+    }
+
+    data = new int[freqMap.size()];
+    freq = new int[freqMap.size()];
+
+    int index = 0;
+    for (auto& pair : freqMap) {
+        data[index] = pair.first;
+        freq[index] = pair.second;
+        index++;
+    }
+
+
 }
