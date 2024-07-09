@@ -80,8 +80,6 @@ int main(int argc, char* argv[]) {
         cout << pair.first << " " << pair.second << endl;
     }
 
-
-
     // Aplicar la codificación a gapsA
     vector<unsigned int> datosComprimidosA;
     for (int i = 0; i < n; ++i) {
