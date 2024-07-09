@@ -13,6 +13,27 @@ void dNormal(int n, int media, int desviacionEstandar, int* A, int semilla);
 void gapCoding(int n, int* A, int* G);
 void createSample(int n, int* A, int* sample, int m, int b);
 void imprimeArreglo (int* A, int n);
+int busquedaBinaria(int n, const int* A, int s);
+
+int busquedaBinaria(int n, const int* A, int s){
+    int l = 0;
+    int r = n - 1;
+    
+    while (l <= r)
+    {
+        int mid = (l + r)/2;
+        if(A[mid] == s){
+            return mid;
+        }
+        if (A[mid] < s){
+            
+            l = mid+1;
+        }else{
+            r = mid - 1;
+        }
+    }
+    return -1;
+}
 
 int dLineal (int n, int e, int* A){
     A[0] = rand();
