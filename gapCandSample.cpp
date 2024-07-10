@@ -15,4 +15,15 @@ void createSample(int n, int* A, int* sample, int m, int b) {
         sample[i] = A[acum];
         acum += b;
     }
+    sample[m] = A[n]; // asi nos aseguramos que se cubran todos los intervalos (menos eficiente por intervalo final mas grande)
 }
+void reconstruirArregloDesdeSample(int* gaps, int* sample, int ini, int fin, int* reconstruido, int b) {
+    int sampleIdx = ini / b;  // Índice en el arreglo sample
+    int val = sample[sampleIdx];  // Valor inicial basado en la muestra
+
+    for (int i = 0; i < (fin - ini); ++i) {
+        val += gaps[ini + i];  // Reconstruir el valor usando los gaps
+        reconstruido[i] = val;
+    }
+}
+

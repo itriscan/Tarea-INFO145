@@ -1,6 +1,7 @@
 #ifndef BINARYSEARCH_H
+#define BINARYSEARCH_H
 
-int busquedaBinaria(int n, const int* A, int s);
+// Function prototype for binary search
+int busquedaBinaria(int n, int *A, int s);
 
 #endif
-

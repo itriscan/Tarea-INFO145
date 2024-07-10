@@ -2,7 +2,7 @@
 #include <algorithm>
 #include "distribuciones.h"
 
-void dLineal(int n, int e, int* A) {
+void dLineal(int n, int e, int *A) {
     A[0] = rand();
     for (int i = 1; i < n; i++) {
         A[i] = A[i - 1] + (rand() % e);

@@ -1,13 +1,15 @@
-int busquedaBinaria(int n, const int* A, int s){
+#include "binarySearch.h"
+
+int busquedaBinaria(int n,  int *A, int s){
     int l = 0;
     int r = n - 1;
     while (l <= r)
     {
-        int mid = (l + r)/2;
+        int mid = l + (r-l)/2;
         if(A[mid] == s){
             return mid;
         }
-        if (A[mid] < s){
+        else if (A[mid] < s){
             
             l = mid+1;
         }else{
