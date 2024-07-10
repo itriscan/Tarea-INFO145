@@ -31,8 +31,8 @@ void buscarElementoSampleYGaps(int n, int* A, int* gapsA, int* sampleA, int m, i
         ini = (i - 1) * b;
         fin = (i < m) ? i * b : n; 
     }
-    cout << "ini= " << ini << " fin= " << fin << endl;
-    cout << "Intervalo de búsqueda en gapsA: [" << ini << ", " << fin << "]" << endl;
+    //cout << "ini= " << ini << " fin= " << fin << endl;
+    //cout << "Intervalo de búsqueda en gapsA: [" << ini << ", " << fin << "]" << endl;
 
     // Reconstruir el arreglo dentro del intervalo
     int* reconstruido = new int[fin - ini];
@@ -108,13 +108,24 @@ int main(int argc, char* argv[]) {
     createSample(n, B, sampleB, m ,b);
     double t0,t1;
     // Supongamos que queremos encontrar un elemento en A
-    int elementoBuscado = A[8]; // por ejemplo, buscamos el elemento en la mitad del arreglo original
+    cout << "Distribución lineal: \n";
+    int ind = (rand() % n) + 1;
+    int elementoBuscado = A[ind]; // por ejemplo, buscamos el elemento en la mitad del arreglo original
     cout << "Elemento buscado:" << elementoBuscado << endl;
     t0 = (double) clock();
     buscarElementoSampleYGaps(n, A, gapsA, sampleA, m, b, elementoBuscado);
     t1 = (double) clock();
     cout << "El tiempo fue de : " << (double)(t1 -t0)/ CLOCKS_PER_SEC << " seg."<< endl;
+    cout << "\nDistribución normal: \n";
 
+    // Supongamos que queremos encontrar un elemento en A
+    int ind2 = (rand() % n) + 1;
+    int elementoBuscado2 = B[ind2]; // por ejemplo, buscamos el elemento en la mitad del arreglo original
+    cout << "Elemento buscado:" << elementoBuscado2 << endl;
+    t0 = (double) clock();
+    buscarElementoSampleYGaps(n, B, gapsB, sampleA, m, b, elementoBuscado2);
+    t1 = (double) clock();
+    cout << "El tiempo fue de : " << (double)(t1 -t0)/ CLOCKS_PER_SEC << " seg."<< endl;
     //imprimeArreglo(A, n);
     //imprimeArreglo(sampleB, m);
     
